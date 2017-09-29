@@ -16,7 +16,10 @@ module.exports.pitch = function (request, prevRequest) {
   if (this.cacheable) this.cacheable();
   const callback = this.async();
   if ([".js", ".ts"].indexOf(path.extname(request)) >= 0) {
-    produce(this, request, callback, loaderUtils.getLoaderConfig(this));
+    produce(this, request, callback, loaderUtils.getOptions
+      ? loaderUtils.getOptions(this)
+      : loaderUtils.getLoaderConfig(this)
+    );
   } else {
     const parts = request.split("!");
     const filename = parts[parts.length - 1];
